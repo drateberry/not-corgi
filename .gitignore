@@ -1,0 +1,47 @@
+# ---- Datasets and model artifacts (kept out of the ~15MB submission ZIP) ----
+model/data/raw/*
+model/data/processed/*/*/*
+model/artifacts/*
+api/artifacts/*
+*.h5
+*.keras
+*.tflite
+*.pb
+saved_model/
+
+# ...but keep the empty directories themselves, so the expected layout is
+# visible in a fresh clone.
+!**/.gitkeep
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ---- Node / React Native / Expo ----
+node_modules/
+.expo/
+.expo-shared/
+*.log
+npm-debug.*
+yarn-error.*
+
+# ---- Secrets and local config ----
+.env
+.env.local
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Submission artifact ----
+project.zip
+
+# ---- Instruction files ----
+instructions.md 
+specifications.md

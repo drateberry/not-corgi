@@ -1,0 +1,15 @@
+# Flask API dependencies.
+# Inference is CPU-only by design (specifications.md §4.2) so that anyone
+# testing the project can run it without a GPU.
+
+flask
+flask-cors
+pillow
+numpy
+
+# TODO: decide between full tensorflow and tflite-runtime here. tflite-runtime
+# is much smaller, which matters for cloud deployment, but only works if the
+# TFLite conversion (the §3 stretch goal) actually lands. Start with tensorflow.
+tensorflow
+
+# TODO: add a production WSGI server (gunicorn or waitress) for deployment.

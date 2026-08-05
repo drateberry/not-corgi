@@ -1,0 +1,2 @@
+# Shared presentational components (probability bars, verdict banner, error
+# state, loading state) as they get factored out of the screens.

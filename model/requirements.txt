@@ -1,0 +1,13 @@
+# Training dependencies for the Not Corgi model.
+# Pin exact versions once the environment is working — an unpinned TensorFlow
+# upgrade can change whether preprocessing is baked into MobileNetV3, which is
+# the double-normalization trap in specifications.md section 5.3.
+
+tensorflow
+numpy
+pillow
+matplotlib
+scikit-learn
+
+# TODO: add whatever prepare_data.py ends up needing for near-duplicate
+# detection (e.g. imagehash).
