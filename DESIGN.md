@@ -18,15 +18,15 @@ To facilitate easy use of the classifier, there is also a mobile application bui
 
 The real challenge of this project is hidden behind its name. Deciding whether a photo shows a corgi at all is relatively simple. The difficulty came from my decision to give the Cardigan Welsh Corgi and the Pembroke Welsh Corgi separate classes instead of collapsing them into one.
 
-The two breeds differ in tail, ear shape, coat color, and build. Cardigans have a long full tail, while Pembrokes are commonly docked shortly after birth or born naturally bobbed. Cardigan ears are larger and more rounded; Pembroke ears are smaller and more pointed. Brindle and blue merle coats appear only in Cardigans. Cardigans are also larger and more heavily boned. When launching this project, I expected the tail to be a mostly binary indicator of breed. This turned out to be shortsighted and created challenges that had to be trained around.
+The two breeds differ in tail, ear shape, coat color, and build. Cardigans have a long full tail, while Pembrokes are commonly docked shortly after birth or born naturally bobbed. Cardigan ears are larger and more rounded; Pembroke ears are smaller and more pointed. Brindle and blue merle coats appear only in Cardigans. Cardigans are also larger and more heavily boned. When launching this project, I expected the tail to be a mostly binary indicator of breed. This turned out to be shortsighted and exposed the accuracy ceiling.
 
-What makes the problem hard, is that the tail is usually not in the frame. Most photographs of dogs are portraits: the dog is facing the camera, or the shot is cropped at the shoulders, or the tail is behind the body, or the dog is sitting on it. When I reviewed the Stanford Dogs Dataset, the feature I had expected to carry the classification, was missing from most of the images in the dataset.
+What makes the problem hard is that the tail is usually not in the frame. Most photographs of dogs are portraits: the dog is facing the camera, or the shot is cropped at the shoulders, or the tail is behind the body, or the dog is sitting on it. When I reviewed the Stanford Dogs Dataset, the feature I had expected to carry the classification was missing from most of the images in the dataset.
 
 Docking is banned or heavily restricted across much of Europe, and the Stanford Dogs Dataset is assembled from images scraped from the web without respect to region. A full tail therefore does not reliably mean Cardigan. So the tail is not merely absent much of the time; when it is present, it is not the easier identifier I had originally expected.
 
-That leaves ear shape and coat color as the signals available in the typical photograph, and both are weaker than the tail. Ear shape is a difference of degree rather than kind, and it is sensitive to head angle and to whether the ears are perked or relaxed. Coat color can classify a corgi as a Cardigan when brindle or blue merle, but the colors the two breeds share do not indicate a breed. This is why the augmentation pipeline is deliberately mild on rotation and contrast as aggressive versions of either would damage two of the key signals.
+That leaves ear shape and coat color as the signals available in the typical photograph, and both are weaker than the tail. Ear shape is a difference of degree rather than kind, and it is sensitive to head angle and to whether the ears are perked or relaxed. Coat color can classify a corgi as a Cardigan when brindle or blue merle, but the colors the two breeds share do not indicate a breed. This is why the augmentation pipeline is deliberately mild on rotation and contrast, as aggressive versions of either would damage two of the key signals.
 
-When a Pembroke and a Cardigan are photographed in a way that hides the tail, obscures the ears, and shows a coat color both breeds share, the pixels do not contain sufficient information needed to tell them apart. No quantity of training data can analyze visual signals that don't exist. A knowledgeable human looking at the same cropped photograph is also guessing. That is what separates this from a model that is merely undertrained: the limit is in the data, not in the learner.
+When a Pembroke and a Cardigan are photographed in a way that hides the tail, obscures the ears, and shows a coat color both breeds share, the pixels do not contain the information needed to tell them apart. No quantity of training data can train a model to analyze visual signals that don't exist. A knowledgeable human looking at the same cropped photograph is also guessing. That is what separates this from a model that is merely undertrained: the limit is in the data, not in the learner.
 
 ---
 
@@ -95,11 +95,11 @@ I am reporting fractions and raw numbers because the test set is small enough th
 
 I included Grad-CAM to answer what the model is evaluating to reach its classification decision. Was it looking at the dog or were there environmental features it was using to determine not corgi or breed?
 
-The most useful finding from the review of Grad-CAM layers on miscategorized photographs exposed a failure, not of the model, but of the training data. An image that was labeled as a Pembroke was predicted as a Cardigan at 0.94 confidence by the model. The Grad-CAM overlay showed the proper focus on coat color and ears, a blue merle with rounded ears, traits that can only be markers on a Cardigan. 
+Reviewing Grad-CAM overlays on the misclassified photographs exposed a failure, not of the model, but of the dataset. An image that was labeled as a Pembroke was predicted as a Cardigan at 0.94 confidence by the model. The Grad-CAM overlay showed the proper focus on coat color and ears, a blue merle with rounded ears, traits that can only be markers on a Cardigan. 
 
 This discovery validated that the model gives attention to the features that distinguish the breeds. This also exposed that the Stanford Dogs Dataset carries label noise on the distinction this project seeks to explore. I corrected the labeling of this one image, but I did not audit the remaining images for label accuracy.
 
-In the final training run of the model, it did not hesitate on its classification errors with its confidence on three of eight incorrectly classified corgis between 0.96 and 0.99, consequently making it so that no confidence threshold could filter these errors out.
+The model does not hesitate on its classification errors. Three of eight incorrectly classified corgis in the final run were predicted with confidence between 0.96 and 0.99, making it so that no confidence threshold could filter these errors out.
 
 ---
 

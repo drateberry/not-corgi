@@ -5,7 +5,6 @@ Per specifications.md section 4.2:
     image upload.
   - Returns class probabilities for all three classes plus a Grad-CAM heatmap
     overlay image.
-  - Deployed to a cloud host so the mobile client can reach it over cellular.
   - Inference runs on CPU — no GPU dependency for anyone testing the project.
 
 The class ordering (Cardigan=0, Not_Corgi=1, Pembroke=2) is imported from the

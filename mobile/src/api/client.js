@@ -5,8 +5,7 @@
  * details and so retry/timeout behaviour has exactly one home.
  *
  * Network reliability is a functional requirement, not a nicety
- * (specifications.md section 9): the demo is filmed at a dog park on cellular
- * data, and weak signal is the most likely cause of a failed demo. Every path
+ * (specifications.md section 9): weak signal is the most likely cause of a failed demo. Every path
  * out of this module should produce something the UI can show the user — never
  * an unhandled rejection.
  */
