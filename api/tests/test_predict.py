@@ -11,5 +11,4 @@ Worth covering, roughly in order of how likely each is to bite during the demo:
   - Missing file, unsupported format, and corrupt image all return a clean error
     rather than a 500.
 
-TODO: implement.
 """

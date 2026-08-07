@@ -12,31 +12,56 @@ The class ordering (Cardigan=0, Not_Corgi=1, Pembroke=2) is imported from the
 training code rather than redeclared here; see config.py.
 """
 
-# TODO: imports (flask, and the helpers from inference.py)
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+from PIL import UnidentifiedImageError
 
+import config
+import inference
 
-def create_app():
+def create_app(model=None):
     """Build and configure the Flask application.
-
-    TODO: implement. Load the model once at startup rather than per request —
-    model loading is slow and the demo is on cellular data where every second of
-    latency shows.
     """
-    raise NotImplementedError
+    app = Flask(__name__)
+    app.config["MAX_CONTENT_LENGTH"] = config.MAX_CONTENT_LENGTH
+    CORS(app)
+    app.config["MODEL"] = model if model is not None else inference.load_model(
+        config.MODEL_PATH
+    )
 
+    @app.get("/health")
+    def health():
+        # Returns model status as part of health check
+        return jsonify({
+            "status": "ok",
+            "model_loaded": app.config["MODEL"] is not None,
+            "classes": config.CLASS_NAMES
+        })
 
-# TODO: POST /predict
-#   Accepts multipart form data with an image file.
-#   Returns JSON: probabilities for all three classes, the predicted class, and
-#   the Grad-CAM overlay (base64-encoded, or a URL the app can fetch).
-#   Handle the failure cases the app will actually hit: no file, unsupported
-#   format, corrupt image, image too large.
+    @app.post("/predict")
+    def predict():
+        if "image" not in request.files:
+            return jsonify({"error": "no image file in request", "code": "no_file"}), 400
+        try:
+            result = inference.predict(app.config["MODEL"], request.files["image"].read())
+        except (UnidentifiedImageError, OSError):
+            return jsonify({"error": "could not decode image", "code": "bad_image"}), 400
+        return jsonify(result)
 
-# TODO: GET /health
-#   Cheap liveness check. Useful for confirming the deployment is up from a dog
-#   park before starting to film (spec section 9).
+    @app.errorhandler(400)
+    def bad_request(e):
+        return jsonify({"error": "malformed request", "code": "bad_request"}), 400
 
+    @app.errorhandler(413)
+    def too_large(e):
+        return jsonify({"error": "image too large", "code": "too_large"}), 413
+
+    @app.errorhandler(500)
+    def server_error(e):
+        return jsonify({"error": "internal server error", "code": "server_error"}), 500
+    
+    return app
 
 if __name__ == "__main__":
     # Local development only. Use a production WSGI server when deployed.
-    create_app().run(debug=True)
+    create_app().run(host=config.HOST, port=config.PORT)

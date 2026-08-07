@@ -5,19 +5,27 @@ specifications.md section 5.2 requires the Cardigan=0 / Not_Corgi=1 /
 Pembroke=2 mapping be consistent across training, API, and app — a mismatch
 scrambles labels silently with no error. One definition, imported everywhere,
 is the cheapest way to guarantee that.
-
-TODO: make model/src importable from here (path entry, or install the model
-package). Until then this import will fail.
 """
 
-# from model.src.constants import CLASS_NAMES  # noqa: F401
+import os
+import sys
+from pathlib import Path
+from dotenv import load_dotenv
 
-# TODO: path to the trained model file (see .env.example).
-MODEL_PATH = None
+API_DIR = Path(__file__).resolve().parent
+load_dotenv(API_DIR / ".env")
 
-# TODO: maximum accepted upload size. Phone cameras produce large files and the
-# demo is on cellular — consider downscaling client-side too.
-MAX_CONTENT_LENGTH = None
+MODEL_SRC = API_DIR.parent / "model" / "src"
+sys.path.insert(0, str(MODEL_SRC))
 
-# TODO: allowed image MIME types / extensions.
-ALLOWED_EXTENSIONS = None
+from constants import CLASS_NAMES, IMAGE_SIZE, LAST_CONV_LAYER # noqa: E402
+
+# Let's make sure that model_path can be resolved no matter where the shell is
+MODEL_PATH = Path(os.environ.get("MODEL_PATH", "artifacts/not_corgi.keras"))
+if not MODEL_PATH.is_absolute():
+    MODEL_PATH = API_DIR / MODEL_PATH
+
+HOST = os.environ.get("HOST", "0.0.0.0")
+PORT = int(os.environ.get("PORT", 5001))
+
+MAX_CONTENT_LENGTH = 10 * 1024 * 1024
