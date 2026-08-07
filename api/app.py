@@ -42,8 +42,9 @@ def create_app(model=None):
     def predict():
         if "image" not in request.files:
             return jsonify({"error": "no image file in request", "code": "no_file"}), 400
+        data = request.files["image"].read()
         try:
-            result = inference.predict(app.config["MODEL"], request.files["image"].read())
+            result = inference.predict(app.config["MODEL"], data)
         except (UnidentifiedImageError, OSError):
             return jsonify({"error": "could not decode image", "code": "bad_image"}), 400
         return jsonify(result)

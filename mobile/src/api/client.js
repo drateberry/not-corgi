@@ -10,23 +10,76 @@
  * out of this module should produce something the UI can show the user — never
  * an unhandled rejection.
  */
+import * as FileSystem from "expo-file-system/legacy";
 
-/**
- * Upload an image to POST /predict and return the parsed result.
- *
- * TODO: implement. Multipart form data. Distinguish the failure modes the UI
- * needs to tell apart — timeout, no connectivity, server error, bad response —
- * because "try again" is right for some of them and useless for others.
- */
-export async function predict(imageUri) {
-  throw new Error("Not implemented");
+import { API_BASE_URL, REQUEST_TIMEOUT_MS } from "../constants";
+
+const TIMED_OUT = { timedOut: true };
+const ok = (data) => ({ ok: true, data });
+const fail = (code, message, retryable) => ({ ok: false, code, message, retryable });
+
+/*
+* fetch with a timeout. Timeout means either a connection or server issue.
+*/
+async function fetchWithTimeout(url, options = {}) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    try {
+        return await fetch (url, {...options, signal: controller.signal });
+    } finally {
+        clearTimeout(timer);
+    }
 }
 
-/**
- * Hit GET /health to confirm the API is reachable.
- *
- * TODO: implement. Worth calling before filming.
- */
+export async function predict(imageUri) {
+    let res;
+    try {
+        res = await Promise.race([ 
+            FileSystem.uploadAsync(`${API_BASE_URL}/predict`, imageUri, {
+                httpMethod: "POST",
+                uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+                fieldName: "image",
+                mimeType: "image/jpeg",
+            }),
+            new Promise((resolve) => setTimeout(() => resolve(TIMED_OUT), REQUEST_TIMEOUT_MS)),
+        ]);
+    } catch (e) {
+        console.log("upload error:", e?.name, e?.message, JSON.stringify(e));
+        return fail(
+            "unreachable",
+            `Can't reach the server at ${API_BASE_URL}. Check the API is running and the address is right.`,
+            false
+        );
+    }
+
+    if (res === TIMED_OUT) {
+        return fail("timeout", "The server took too long. Try again.", true);
+    }
+
+    let body;
+    try {
+        body = JSON.parse(res.body);        
+    } catch (e) {
+        return fail("bad_response", "The server sent something unreadable.", false);
+    }
+
+    if (res.status >= 400) {
+        return fail(
+            body.code ?? "http_error",
+            body.error ?? `Server returned ${res.status}.`,
+            res.status >= 500
+        );
+    }
+
+    return ok(body);
+}
+
 export async function checkHealth() {
-  throw new Error("Not implemented");
+    try {
+        const res = await fetchWithTimeout(`${API_BASE_URL}/health`);
+        const body = await res.json();
+        return body.model_loaded ? ok(body) : fail("no_model", "API is up but no AI model is reachable.", false);
+    } catch (e) {
+        return fail("unreachable", `No answer from ${API_BASE_URL}.`, false);
+    }
 }

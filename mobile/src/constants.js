@@ -10,18 +10,47 @@
  * off those, so this array is a display-order preference rather than a second
  * source of truth that can drift.
  */
+export const COLORS = {
+  bg: "#f3f2f2",
+  surface: "#eae9e9",
+  ink: "#201e1d",
+  accent: "#ec3013",
+  accent2: "#e15b47",
+  accent300: "#ffc4b8",
+  accent500: "#ff563c",
+  neutral300: "#d7d3d3",
+  neutral500: "#9b9797",
+  neutral700: "#605d5d",
+  viewfinder: "#161413",
+  white: "#ffffff",
+};
+
+export const FONTS = {
+  body: "Archivo_400Regular",
+  medium: "Archivo_600SemiBold",
+  heading: "Archivo_800ExtraBold",
+};
+
+export const SPACE = { 1: 4, 2: 8, 3: 12, 4: 16, 6: 24, 8: 32 };
+
+export const RADIUS = 0;
 
 export const CLASS_NAMES = ["Cardigan", "Not_Corgi", "Pembroke"];
 
-// Human-readable labels for the results screen.
-// TODO: fill in (e.g. Cardigan -> "Cardigan Welsh Corgi").
-export const DISPLAY_NAMES = {};
+// Labels for the results screen.
+export const DISPLAY_NAMES = {
+    Cardigan: "Cardigan Welsh Corgi",
+    Not_Corgi: "Not a Corgi",
+    Pembroke: "Pembroke Welsh Corgi",
+};
 
-// TODO: API base URL. Read from an Expo config/env value rather than hardcoding,
-// so switching between a laptop on the local network and the deployed host does
-// not require a code edit mid-demo.
-export const API_BASE_URL = null;
+// These are just for fun to show on the results screen
+export const BREED_BLURBS = {
+    Pembroke: "The one without the tail. Favorite of a certain late queen.",
+    Cardigan: "The older breed, larger, and the one that (almost) always has a tail.",
+};
 
-// TODO: request timeout. Keep it short enough that a dead cellular connection
-// surfaces an error quickly instead of hanging on camera (spec section 9).
-export const REQUEST_TIMEOUT_MS = null;
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:5001";
+
+// short enough time out so that a weak signal or server error fails fast
+export const REQUEST_TIMEOUT_MS = 15000;

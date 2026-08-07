@@ -12,12 +12,43 @@
  * Runs on Expo Go for the server-based path. The on-device TFLite stretch goal
  * would require a development build, which is part of why it is scoped last.
  */
+import { View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import { useFonts, Archivo_400Regular, Archivo_600SemiBold, Archivo_800ExtraBold,} from "@expo-google-fonts/archivo";
 
-// TODO: imports
+import CameraScreen from "./src/screens/CameraScreen";
+import ResultScreen from "./src/screens/ResultScreen";
+import { COLORS } from "./src/constants";
 
-// TODO: navigation between CameraScreen and ResultScreen.
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  // TODO: implement.
-  return null;
+    const [fontsLoaded] = useFonts({
+        Archivo_400Regular,
+        Archivo_600SemiBold,
+        Archivo_800ExtraBold
+    });
+
+    // Hold rendering until Google Fonts load.
+    if (!fontsLoaded) {
+        return <View style={{ flex: 1, backgroundColor: COLORS.viewfinder }} />;
+    }
+
+    return (
+        <SafeAreaProvider>
+            <StatusBar style="light" />
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{
+                    headerShown: false,
+                    contentStyle: { backgroundColor: COLORS.bg },
+                }} >
+                    <Stack.Screen name="Camera" component={CameraScreen} />
+                    <Stack.Screen name="Result" component={ResultScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </SafeAreaProvider>
+    );
 }

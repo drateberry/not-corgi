@@ -9,6 +9,7 @@ api/artifacts/*
 *.tflite
 *.pb
 saved_model/
+api/*.png
 
 # ...but keep the empty directories themselves, so the expected layout is
 # visible in a fresh clone.
