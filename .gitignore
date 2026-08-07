@@ -1,6 +1,7 @@
 # ---- Datasets and model artifacts (kept out of the ~15MB submission ZIP) ----
 model/data/raw/*
 model/data/processed/*/*/*
+model/data/*.zip
 model/artifacts/*
 api/artifacts/*
 *.h5
@@ -34,6 +35,8 @@ yarn-error.*
 # ---- Secrets and local config ----
 .env
 .env.local
+.vscode
+.claude
 
 # ---- OS ----
 .DS_Store
@@ -45,3 +48,4 @@ project.zip
 # ---- Instruction files ----
 instructions.md 
 specifications.md
+scratch.md

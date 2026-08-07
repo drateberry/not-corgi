@@ -1,0 +1,33 @@
+# Colab-side training dependencies.
+#
+# This is deliberately NOT the same file as model/requirements.txt. A Colab
+# runtime already ships with a working, GPU-enabled TensorFlow build plus numpy,
+# pillow, matplotlib and scikit-learn. Re-installing those from
+# model/requirements.txt is at best a slow no-op and at worst swaps the CUDA-
+# matched TensorFlow wheel for a generic one that silently falls back to CPU.
+#
+# So: list here ONLY what a stock Colab image is missing.
+
+# Perceptual hashing for prepare_data.find_near_duplicates(). Remove this if you
+# end up detecting near-duplicates some other way.
+imagehash
+
+# ---------------------------------------------------------------------------
+# On pinning
+# ---------------------------------------------------------------------------
+# specifications.md §5.3 (the double-normalization trap) is version-sensitive:
+# whether MobileNetV3 bakes rescaling into the graph depends on the TensorFlow /
+# Keras version. So the versions you train against are part of the result, and
+# they should be recorded rather than guessed.
+#
+# Do NOT paste speculative version numbers here. Instead:
+#   1. Run the notebook's "Verify the environment" cell — it prints the exact
+#      tensorflow / keras / numpy versions the runtime actually gave you, along
+#      with whether preprocessing is baked in.
+#   2. Once a training run produces a model you intend to keep, paste those
+#      versions in below as `package==version` and commit the change, so the
+#      run is reproducible and the API can be built against a matching stack.
+#
+# tensorflow==
+# keras==
+# numpy==

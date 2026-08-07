@@ -7,6 +7,12 @@ Critical: preprocessing here must match training exactly. Per specifications.md
 section 5.3, do NOT apply preprocess_input on top of a MobileNetV3 that already
 bakes in rescaling — it destroys accuracy with no visible error, and the failure
 looks like a bad model rather than a bad API.
+
+Channel order is the other half of that trap. Keras loaders return RGB; OpenCV's
+imread returns BGR. Training goes through Keras, so decoding uploads here with
+cv2 would feed the model blue dogs — no error, just quietly degraded predictions
+that read as a bad model. requirements.txt specifies Pillow rather than
+opencv-python to keep both sides on RGB; keep it that way.
 """
 
 # TODO: imports — including gradcam from the model package, so the heatmap the

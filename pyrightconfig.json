@@ -1,0 +1,17 @@
+{
+  "extraPaths": ["model/src"],
+
+  "venvPath": "/Users/drateberry/.pyenv/versions",
+  "venv": "3.10.16",
+
+  "exclude": [
+    "**/.*",
+    "**/node_modules",
+    "**/__pycache__",
+    "mobile",
+    "model/data"
+  ],
+
+  "reportMissingModuleSource": "none",
+  "reportMissingTypeStubs": "none"
+}

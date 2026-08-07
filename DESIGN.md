@@ -19,3 +19,11 @@ approved proposal:
   tails, ears, and coat coloration, or to background artifacts.
 - **Evaluation.** The confusion matrix and per-class precision/recall, not just
   aggregate accuracy (§6).
+
+## How I utilized AI
+For the completion of "Not Corgi" I used Anthropic's Claude Code within VSCode in the following ways:
+- Creating the scaffolding and boilerplate of files
+- Design of the UI for the React Native app
+- Validation of final project against original proposal
+
+All uses of Claude are disclosed in the commits on Github where Claude is noted as a co-author of specific commits.

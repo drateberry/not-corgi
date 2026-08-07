@@ -1,0 +1,72 @@
+[
+  {
+    "file": "n02113186_11035.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.666,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_11559.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.744,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_11658.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.988,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_12793.jpg",
+    "true": "Cardigan",
+    "predicted": "Not_Corgi",
+    "confidence": 0.602,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_4536.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.964,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_4976.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.569,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_612.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.984,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_9615.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.656,
+    "judgement": ""
+  },
+  {
+    "file": "n02106662_9735.jpg",
+    "true": "Not_Corgi",
+    "predicted": "Pembroke",
+    "confidence": 0.506,
+    "judgement": ""
+  },
+  {
+    "file": "n02110806_1214.jpg",
+    "true": "Not_Corgi",
+    "predicted": "Cardigan",
+    "confidence": 0.543,
+    "judgement": ""
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "confusion_matrix": [
+    [
+      15,
+      1,
+      7
+    ],
+    [
+      1,
+      63,
+      1
+    ],
+    [
+      0,
+      0,
+      27
+    ]
+  ],
+  "per_class": {
+    "Cardigan": {
+      "precision": 0.9375,
+      "recall": 0.6521739130434783,
+      "support": 23
+    },
+    "Not_Corgi": {
+      "precision": 0.984375,
+      "recall": 0.9692307692307692,
+      "support": 65
+    },
+    "Pembroke": {
+      "precision": 0.7714285714285715,
+      "recall": 1.0,
+      "support": 27
+    }
+  },
+  "headline": {
+    "overall": 0.9130434782608695,
+    "corgi_vs_not": 0.9739130434782609,
+    "breed_given_corgi": 0.84,
+    "breed_n": 50
+  }
+}

@@ -1,0 +1,79 @@
+[
+  {
+    "file": "n02113186_11035.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.678,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_11559.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.48,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_11658.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.78,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_11685.jpg",
+    "true": "Cardigan",
+    "predicted": "Not_Corgi",
+    "confidence": 0.537,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_2635.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.703,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_4536.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.706,
+    "judgement": ""
+  },
+  {
+    "file": "n02113186_612.jpg",
+    "true": "Cardigan",
+    "predicted": "Pembroke",
+    "confidence": 0.978,
+    "judgement": ""
+  },
+  {
+    "file": "n02085620_11696.jpg",
+    "true": "Not_Corgi",
+    "predicted": "Pembroke",
+    "confidence": 0.653,
+    "judgement": ""
+  },
+  {
+    "file": "n02106662_9735.jpg",
+    "true": "Not_Corgi",
+    "predicted": "Cardigan",
+    "confidence": 0.556,
+    "judgement": ""
+  },
+  {
+    "file": "n02107574_445.jpg",
+    "true": "Not_Corgi",
+    "predicted": "Cardigan",
+    "confidence": 0.689,
+    "judgement": ""
+  },
+  {
+    "file": "obj_0126_okapi.jpg",
+    "true": "Not_Corgi",
+    "predicted": "Cardigan",
+    "confidence": 0.68,
+    "judgement": ""
+  }
+]
